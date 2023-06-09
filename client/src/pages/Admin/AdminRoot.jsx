@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbarr from '../../components/Admin/Navbarr'
 import { Outlet } from 'react-router-dom'
+import { useUserContext } from '../../context/UserContext';
+import AdminLogin from './AdminLogin';
 
 const AdminRoot = () => {
+  const [user] = useUserContext()
+
   return (
    <>
-   <Navbarr/>
-   <Outlet/>
+   {
+    user?.isAdmin ? (
+      <>
+      <Navbarr/>
+      <Outlet/>
+      </>
+    ) : (
+      <AdminLogin/>
+    )
+   }
    </>
   )
 }

@@ -92,6 +92,43 @@ const usersController = {
         } 
     },
 
+    AdminPostLogin:async(req,res)=>{
+        const {username,password} = req.body
+        const existedUsername = await Users.findOne({username:username});
+
+        if(!existedUsername){
+            res.json({auth:false, message:'username not found'});
+            return
+        }
+        else{
+            if(existedUsername.isAdmin==false){
+                const isValid = await bcrypt.compare(password, existedUsername.password)
+                const id = existedUsername._id
+                const token = jwt.sign({id:id}, process.env.SECRET_KEY, {
+                    expiresIn:'7d'
+                })
+                if(!isValid){
+                    res.json({auth:false, message:'password is incorrect'})
+                }
+                else{
+                    res.json({auth:true,token:token, user:{
+                    
+                            id:existedUsername._id,
+                            username:existedUsername.username,
+                            email:existedUsername.email,
+                            isAdmin:existedUsername.isAdmin,
+                            basketItems:existedUsername.basketItems
+                        
+                    }, message:'signed in succesfully'})
+                }
+
+
+            }
+        }
+    
+
+    },
+
 
     getAllUsers:async(req,res)=>{
         const users = await Users.find()

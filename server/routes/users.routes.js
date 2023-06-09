@@ -12,5 +12,6 @@ user_router.post('/register', userController.postRegister)
 //post Song
 user_router.post('/login', userController.postLogin)
 
+user_router.post('/admin/login', userController.AdminPostLogin)
 
 module.exports = user_router

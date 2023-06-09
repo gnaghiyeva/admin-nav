@@ -31,6 +31,9 @@ const Navbar = () => {
           </Typography>
           {user ? (
             <>
+            <Button>
+              <Link to="/admin">Admin</Link>
+            </Button>
               <Button color="inherit">
                 {user.username}
               </Button>

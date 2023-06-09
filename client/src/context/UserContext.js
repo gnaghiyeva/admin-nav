@@ -6,7 +6,7 @@ export const UserContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
     useEffect(()=>{
         if (localStorage.getItem('user')) {
-            setUser(localStorage.getItem('user'));
+            setUser(JSON.parse(localStorage.getItem('user')));
         }
        },[])
        const values = [
